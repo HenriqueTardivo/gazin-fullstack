@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "dev:server": "bun --watch src/infra/http/server.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "@types/cors": "^2.8.17",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "core-js": "^3.41.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "reflect-metadata": "^0.2.2",
+    "swagger-ui-express": "^5.0.1",
+    "tsyringe": "^4.8.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "prisma": "^6.4.1"
+  }
+}
