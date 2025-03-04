@@ -1,8 +1,15 @@
 import { Nivel } from "@app/types/niveis.types";
 
-export interface NiveisRepository {
-  createNivel: (nivel: Nivel) => Promise<Nivel>;
-  getNiveis: (page: number, search?: string) => Promise<Nivel[]>;
-  updateNivel: (id: number, nivel: Nivel) => Promise<Nivel>;
-  deleteNivel: (id: number) => void;
+export abstract class NiveisRepository {
+  abstract createNivel: (nivel: Nivel) => Promise<Nivel>;
+  abstract getNiveis: (filter: {
+    id?: number;
+    nivel?: string;
+  }) => Promise<Nivel[]>;
+  abstract getNiveisPaginated: (filter: {
+    page: number;
+    search?: string;
+  }) => Promise<{ count: number; result: Nivel[] }>;
+  abstract updateNivel: (id: number, nivel: Nivel) => Promise<Nivel>;
+  abstract deleteNivel: (id: number) => void;
 }

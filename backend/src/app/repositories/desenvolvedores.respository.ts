@@ -1,18 +1,28 @@
 import { Desenvolvedor } from "@app/types/desenvolvedores.types";
 
-export interface DesenvolvedorRepository {
-  createDesenvolvedor: (desenvolvedor: Desenvolvedor) => Promise<Desenvolvedor>;
+export abstract class DesenvolvedorRepository {
+  abstract createDesenvolvedor: (
+    desenvolvedor: Desenvolvedor
+  ) => Promise<Desenvolvedor>;
 
-  getDesenvolvedores: (
-    page: number,
-    nivel_id?: number,
-    search?: string
-  ) => Promise<Desenvolvedor[]>;
+  abstract getDesenvolvedoresPaginated: (filter: {
+    page?: number;
+    nivel_id?: number;
+    search?: string;
+  }) => Promise<{ count: number; result: Desenvolvedor[] }>;
 
-  updateDesenvolvedor: (
+  abstract getDesenvolvedores: (filter: {
+    nome?: string;
+    nivel_id?: number;
+    id?: number;
+  }) => Promise<Desenvolvedor[]>;
+
+  abstract countDesenvolvedores: (nivel_id: number) => Promise<number>;
+
+  abstract updateDesenvolvedor: (
     id: number,
     desenvolvedor: Desenvolvedor
   ) => Promise<Desenvolvedor>;
 
-  deleteDesenvolvedor: (id: number) => void;
+  abstract deleteDesenvolvedor: (id: number) => Promise<void>;
 }
