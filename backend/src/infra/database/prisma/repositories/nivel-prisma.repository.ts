@@ -3,6 +3,7 @@ import { Nivel } from "@app/types/niveis.types";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
 import { Prisma } from "@prisma/client";
+import { orderByObj } from "@app/utils/order-by-obj";
 
 @Injectable()
 export class NiveisRepositoryPrisma implements NiveisRepository {
@@ -14,7 +15,11 @@ export class NiveisRepositoryPrisma implements NiveisRepository {
     return await this.prismaService.niveis.create({ data: { nivel } });
   }
 
-  public async getNiveisPaginated(filter: { page: number; search?: string }) {
+  public async getNiveisPaginated(filter: {
+    page: number;
+    search?: string;
+    sort: string;
+  }) {
     const where: Prisma.NiveisWhereInput = filter?.search
       ? {
           nivel: {
@@ -24,13 +29,25 @@ export class NiveisRepositoryPrisma implements NiveisRepository {
         }
       : {};
 
+    const orderBy: any =
+      filter.sort === "desenvolvedores/desc"
+        ? { desenvolvedores: { _count: "desc" } }
+        : filter.sort === "desenvolvedores/asc"
+        ? { desenvolvedores: { _count: "asc" } }
+        : orderByObj(filter.sort);
+
     const [result, count] = await Promise.all([
       this.prismaService.niveis.findMany({
         where,
         take: this.PAGE_SIZE,
-        skip: Number(filter.page * this.PAGE_SIZE),
-        orderBy: {
-          id: "asc",
+        skip: Number((filter.page - 1) * this.PAGE_SIZE),
+        orderBy,
+        include: {
+          _count: {
+            select: {
+              desenvolvedores: true,
+            },
+          },
         },
       }),
       this.prismaService.niveis.count({

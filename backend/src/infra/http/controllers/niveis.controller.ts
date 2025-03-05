@@ -15,11 +15,14 @@ import {
 } from "@nestjs/common";
 import { QueryNiveisDTO } from "../dto/query-niveis.dto";
 import { CreateNivelDTO } from "../dto/create-nivel.dto";
+import { IdParamDTO } from "../dto/id-param.dto";
+import { GetNivelByIdUseCase } from "@app/use-cases/niveis/get-nivel-by-id.use-case";
 
 @Controller("/api/niveis")
 export class NiveisController {
   constructor(
     private readonly getNiveisUseCase: GetNiveisUseCase,
+    private readonly getNivelByIdUseCase: GetNivelByIdUseCase,
     private readonly createNivelUseCase: CreateNivelUseCase,
     private readonly updateNivelUseCase: UpdateNivelUseCase,
     private readonly deleteNivelUseCase: DeleteNivelUseCase
@@ -30,8 +33,13 @@ export class NiveisController {
     return this.getNiveisUseCase.execute(query);
   }
 
+  @Get("/:id")
+  public async getNivelById(@Param() { id }: IdParamDTO) {
+    return this.getNivelByIdUseCase.execute(Number(id));
+  }
+
   @Delete("/:id")
-  public async deleteNivel(@Param("id") id: string) {
+  public async deleteNivel(@Param() { id }: IdParamDTO) {
     return this.deleteNivelUseCase.execute(Number(id));
   }
 
@@ -43,7 +51,7 @@ export class NiveisController {
   @Put("/:id")
   @Patch("/:id")
   public async editNivel(
-    @Param("id") id: string,
+    @Param() { id }: IdParamDTO,
     @Body() body: CreateNivelDTO
   ) {
     return this.updateNivelUseCase.execute(Number(id), body);

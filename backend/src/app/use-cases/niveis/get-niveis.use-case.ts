@@ -15,6 +15,7 @@ export class GetNiveisUseCase {
     const { result, count } = await this.nivelRespository.getNiveisPaginated({
       page: filter.page,
       search: filter?.search,
+      sort: filter.sort,
     });
 
     return paginatedResult(result, filter.page, count);

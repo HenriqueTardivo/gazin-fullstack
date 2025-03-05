@@ -1,6 +1,6 @@
+import { ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 
 import App from "./App.tsx";
 import { system } from "./theme.ts";

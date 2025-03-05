@@ -4,14 +4,22 @@ import { IoAdd, IoSearchOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
 
 type Props = {
-  newItemRoute: string;
+  readonly?: boolean;
+  newItemRoute?: string;
   searchText: string;
-  addText: string;
+  addText?: string;
+  onChangeFilter?: (search: string) => void;
 };
 
-export const PageHeader = ({ newItemRoute, searchText, addText }: Props) => {
+export const PageHeader = ({
+  onChangeFilter,
+  newItemRoute,
+  searchText,
+  readonly = false,
+  addText,
+}: Props) => {
   const navigate = useNavigate();
-  const handleAdd = () => navigate(newItemRoute);
+  const handleAdd = () => newItemRoute && navigate(newItemRoute);
 
   return (
     <Stack justify="center" align="center" gap={"20px"}>
@@ -22,18 +30,22 @@ export const PageHeader = ({ newItemRoute, searchText, addText }: Props) => {
           shadow="md"
           h={"50px"}
           pr="40px"
+          onChange={(e) => onChangeFilter?.(e.target.value)}
         />
       </InputGroup>
 
-      <Button
-        bg={"blue.700"}
-        w={"210px"}
-        borderRadius={"md"}
-        onClick={handleAdd}
-      >
-        <IoAdd color={"white"} size={"20px"} />
-        {addText}
-      </Button>
+      {readonly ? null : (
+        <Button
+          bg={"blue.700"}
+          w={"210px"}
+          borderRadius={"md"}
+          _hover={{ opacity: 0.8 }}
+          onClick={handleAdd}
+        >
+          <IoAdd color={"white"} size={"20px"} />
+          {addText}
+        </Button>
+      )}
 
       <Box bg={"gray.200"} h={"1px"} w={"100%"} />
     </Stack>

@@ -5,10 +5,12 @@ export class QueryDesenvolvedorDTO {
   @IsDefined()
   page: number;
 
-  @IsNumberString()
   @IsOptional()
-  nivel_id: number;
+  nivel_id?: number;
 
   @IsOptional()
-  search: string;
+  search?: string;
+
+  @IsOptional()
+  sort?: string;
 }

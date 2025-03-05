@@ -1,5 +1,4 @@
-import { Transform } from "class-transformer";
-import { IsDefined, IsNumberString, IsOptional, Min } from "class-validator";
+import { IsDefined, IsNumberString, IsOptional } from "class-validator";
 
 export class QueryNiveisDTO {
   @IsNumberString()
@@ -8,8 +7,11 @@ export class QueryNiveisDTO {
 
   @IsNumberString()
   @IsOptional()
-  nivel_id: number;
+  nivel_id?: number;
 
   @IsOptional()
-  search: string;
+  search?: string;
+
+  @IsOptional()
+  sort?: string;
 }

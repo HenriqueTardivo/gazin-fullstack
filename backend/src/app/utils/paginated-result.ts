@@ -17,7 +17,7 @@ export function paginatedResult(
     meta: {
       total: count,
       per_page: page_size,
-      current_page: page,
+      current_page: Number(page),
       last_page: count > 0 ? Math.ceil(count / page_size) : 1,
     },
   };

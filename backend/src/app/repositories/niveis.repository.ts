@@ -8,6 +8,7 @@ export abstract class NiveisRepository {
   }) => Promise<Nivel[]>;
   abstract getNiveisPaginated: (filter: {
     page: number;
+    sort?: string;
     search?: string;
   }) => Promise<{ count: number; result: Nivel[] }>;
   abstract updateNivel: (id: number, nivel: Nivel) => Promise<Nivel>;

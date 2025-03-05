@@ -17,8 +17,9 @@ export class GetDesenvolvedoresUseCase {
     const { result, count } =
       await this.desenvolvedoresRepository.getDesenvolvedoresPaginated({
         page: Number(filter.page),
-        nivel_id: filter?.nivel_id,
+        nivel_id: filter?.nivel_id ? Number(filter?.nivel_id) : undefined,
         search: filter?.search,
+        sort: filter.sort,
       });
 
     return paginatedResult(result, filter.page, count);

@@ -1,7 +1,8 @@
-import { IsDefined, IsString } from "class-validator";
+import { IsDefined, IsString, MaxLength } from "class-validator";
 
 export class CreateNivelDTO {
   @IsDefined()
   @IsString()
+  @MaxLength(250)
   nivel: string;
 }

@@ -10,6 +10,8 @@ import { Module } from "@nestjs/common";
 import { DesenvolvedoresController } from "./controllers/desenvolvedores.controller";
 import { NiveisController } from "./controllers/niveis.controller";
 import { DatabaseModule } from "@infra/database/database.module";
+import { GetDesenvolvedorByIdUseCase } from "@app/use-cases/desenvolvedores/get-desenvolvedor-by-id.use-case";
+import { GetNivelByIdUseCase } from "@app/use-cases/niveis/get-nivel-by-id.use-case";
 
 @Module({
   imports: [DatabaseModule],
@@ -19,6 +21,8 @@ import { DatabaseModule } from "@infra/database/database.module";
     DeleteDesenvolvedorUseCase,
     GetDesenvolvedoresUseCase,
     UpdateDesenvolvedoresUseCase,
+    GetDesenvolvedorByIdUseCase,
+    GetNivelByIdUseCase,
     CreateNivelUseCase,
     DeleteNivelUseCase,
     GetNiveisUseCase,

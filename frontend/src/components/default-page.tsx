@@ -1,15 +1,16 @@
-import { Flex, HStack, Image, Stack } from "@chakra-ui/react";
+import { Flex, Image, Stack, Text } from "@chakra-ui/react";
+import { ReactNode } from "react";
 import { IoExitOutline } from "react-icons/io5";
+import { useLocation } from "react-router";
 import Logo from "../assets/logo.svg";
 import { HeaderButton } from "./header-button";
-import { ReactNode } from "react";
-import { useLocation } from "react-router";
 
 type Props = {
   children: ReactNode;
+  pageTitle?: string;
 };
 
-export function DefaultPage({ children }: Props) {
+export function DefaultPage({ children, pageTitle }: Props) {
   const location = useLocation();
 
   const handleExit = () => window.open("https://www.gazin.com.br");
@@ -37,16 +38,22 @@ export function DefaultPage({ children }: Props) {
           maxWidth={"120px"}
         />
 
-        <Flex gap={"10px"} flexDir={{ base: "column", md: "row" }}>
-          {buttons.map((btn) => (
-            <HeaderButton
-              key={btn.route}
-              isSelected={location.pathname === btn.route}
-              title={btn.title}
-              route={btn.route}
-            />
-          ))}
-        </Flex>
+        {pageTitle ? (
+          <Text color={"gray.600"} fontSize={{ base: "md", md: "xl" }}>
+            {pageTitle}
+          </Text>
+        ) : (
+          <Flex gap={"10px"} flexDir={{ base: "column", md: "row" }}>
+            {buttons.map((btn) => (
+              <HeaderButton
+                key={btn.route}
+                isSelected={location.pathname === btn.route}
+                title={btn.title}
+                route={btn.route}
+              />
+            ))}
+          </Flex>
+        )}
 
         <IoExitOutline size={"20px"} onClick={handleExit} cursor="pointer" />
       </Flex>

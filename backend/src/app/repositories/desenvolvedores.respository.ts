@@ -8,6 +8,7 @@ export abstract class DesenvolvedorRepository {
   abstract getDesenvolvedoresPaginated: (filter: {
     page?: number;
     nivel_id?: number;
+    sort?: string;
     search?: string;
   }) => Promise<{ count: number; result: Desenvolvedor[] }>;
 

@@ -15,11 +15,14 @@ import {
 } from "@nestjs/common";
 import { QueryDesenvolvedorDTO } from "../dto/query-desenvolvedores.dto";
 import { CreateDesenvolvedorDTO } from "../dto/create-desenvolvedor.dto";
+import { IdParamDTO } from "../dto/id-param.dto";
+import { GetDesenvolvedorByIdUseCase } from "@app/use-cases/desenvolvedores/get-desenvolvedor-by-id.use-case";
 
 @Controller("/api/desenvolvedores")
 export class DesenvolvedoresController {
   constructor(
     private readonly getDesenvolvedoresUseCase: GetDesenvolvedoresUseCase,
+    private readonly getDesenvolvedoresByIdUseCase: GetDesenvolvedorByIdUseCase,
     private readonly createDesenvolvedoresUseCase: CreateDesenvolvedorUseCase,
     private readonly updateDesenvolvedoresUseCase: UpdateDesenvolvedoresUseCase,
     private readonly deleteDesenvolvedoresUseCase: DeleteDesenvolvedorUseCase
@@ -30,8 +33,13 @@ export class DesenvolvedoresController {
     return this.getDesenvolvedoresUseCase.execute(query);
   }
 
+  @Get("/:id")
+  public async getDesenvolvedorById(@Param() { id }: IdParamDTO) {
+    return this.getDesenvolvedoresByIdUseCase.execute(Number(id));
+  }
+
   @Delete("/:id")
-  public async deleteDesenvolvedor(@Param("id") id: string) {
+  public async deleteDesenvolvedor(@Param() { id }: IdParamDTO) {
     return await this.deleteDesenvolvedoresUseCase.execute(Number(id));
   }
 
@@ -43,7 +51,7 @@ export class DesenvolvedoresController {
   @Put("/:id")
   @Patch("/:id")
   public async editDesenvolvedor(
-    @Param("id") id: string,
+    @Param() { id }: IdParamDTO,
     @Body() body: CreateDesenvolvedorDTO
   ) {
     return await this.updateDesenvolvedoresUseCase.execute(Number(id), body);
