@@ -79,7 +79,7 @@ export function EditDesenvolvedor() {
         type: "success",
         title: "Desenvolvedor atualizado com sucesso!",
       });
-      navigate("/desnvolvedores");
+      navigate("/desenvolvedores");
     } catch (error: any) {
       const title =
         error?.response?.data?.message ?? "Erro ao atualizar desenvolvedor!";
@@ -119,7 +119,9 @@ export function EditDesenvolvedor() {
     }
 
     if (isNivelOpen) {
-      return <SelectNivel onNivelSelect={handleSelectNivel} />;
+      return (
+        <SelectNivel isOpen={isNivelOpen} onNivelSelect={handleSelectNivel} />
+      );
     }
 
     return (

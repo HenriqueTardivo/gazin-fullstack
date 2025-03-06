@@ -79,9 +79,11 @@ export function NewDesenvolvedor() {
   }
 
   return (
-    <DefaultPage pageTitle={`Novo desenvolvedor`}>
+    <DefaultPage
+      pageTitle={isNivelOpen ? "Selecione o nível" : `Novo desenvolvedor`}
+    >
       {isNivelOpen ? (
-        <SelectNivel onNivelSelect={handleSelectNivel} />
+        <SelectNivel isOpen={isNivelOpen} onNivelSelect={handleSelectNivel} />
       ) : (
         <Stack align={"center"} justify={"center"} gap={"30px"}>
           <Box bg={"gray.200"} h={"1px"} w={"100%"} />

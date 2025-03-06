@@ -1,16 +1,18 @@
 import { Box, Button, Center, Spinner, Stack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useNiveis } from "../../hooks/useNiveis";
 import { TableNiveis } from "../niveis/table-niveis";
 import { PageHeader } from "../page-header";
+import { toaster } from "../ui/toaster";
 
 type Props = {
+  isOpen: boolean;
   onNivelSelect: (values: { id: number; nivel: string } | null) => void;
 };
 
-export function SelectNivel({ onNivelSelect }: Props) {
+export function SelectNivel({ onNivelSelect, isOpen }: Props) {
   const [page, setPage] = useState<number>(1),
     [search, setSearch] = useState<string>(""),
     [sortConfig, setSortConfig] = useState<{
@@ -40,6 +42,18 @@ export function SelectNivel({ onNivelSelect }: Props) {
         prev.key === columnKey && prev.direction === "asc" ? "desc" : "asc",
     }));
   };
+
+  useEffect(() => {
+    if (data && data.data.length === 0 && isOpen) {
+      toaster.dismiss();
+      toaster.create({
+        type: "error",
+        title:
+          "Nenhum nível cadastrado, antes de cadastrar desenvolvedores cadastre os níveis!",
+      });
+      onNivelSelect(null);
+    }
+  }, [data, isOpen]);
 
   const handleChangeFilter = (value: string) => setSearch(value);
 
