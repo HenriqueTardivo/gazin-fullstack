@@ -11,7 +11,6 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
   backend:
     build: ./backend
     container_name: backend
@@ -22,16 +21,12 @@ services:
       DATABASE_URL: postgresql://postgres:password@postgres:5432/gazin
     ports:
       - "3000:3000"
-
   frontend:
-    image: nginx:latest
+    build: ./frontend
     container_name: meu-projeto-front
     restart: always
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./frontend/dist:/usr/share/nginx/html
     ports:
-      - "80:80"
+      - "80:3001"
     depends_on:
       - backend
 volumes:

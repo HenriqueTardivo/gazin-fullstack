@@ -12,7 +12,17 @@ export function useYup() {
     data_nascimento: yup
       .string()
       .matches(/^\d{4}-\d{2}-\d{2}$/, "Data inválida, use o formato YYYY-MM-DD")
-      .required("A data de nascimento é obrigatória"),
+      .required("A data de nascimento é obrigatória")
+      .test(
+        "data-maior-que-hoje",
+        "A data de nascimento não pode ser maior que a data de hoje",
+        (value) => {
+          const dataNascimento = new Date(value);
+          const hoje = new Date();
+          hoje.setHours(0, 0, 0, 0); // Zera a hora para comparar apenas a data
+          return dataNascimento <= hoje;
+        }
+      ),
 
     hobby: yup
       .string()
