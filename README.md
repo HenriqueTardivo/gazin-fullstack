@@ -12,7 +12,7 @@
 
 Foi desenvolvido uma interface responsiva e intuitiva para registro de níveis e desenvolvedores.
 
-A aplicacao está preparada para layouts de desktop e mobile.
+A aplicação está preparada para layouts de desktop e mobile.
 
 ## Como executar
 
