@@ -3,7 +3,6 @@ import { DesenvolvedorRepository } from "@app/repositories/desenvolvedores.respo
 import { Desenvolvedor } from "@app/types/desenvolvedores.types";
 import { orderByObj } from "@app/utils/order-by-obj";
 import { Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
 
 @Injectable()
 export class DesenvolvedoresRepositoryPrisma
@@ -54,7 +53,7 @@ export class DesenvolvedoresRepositoryPrisma
     search?: string;
     sort: string;
   }): Promise<{ count: number; result: Desenvolvedor[] }> {
-    const where: Prisma.DesenvolvedoresWhereInput = {
+    const where: any = {
       ...(filter.search
         ? { nome: { contains: filter.search, mode: "insensitive" } }
         : {}),

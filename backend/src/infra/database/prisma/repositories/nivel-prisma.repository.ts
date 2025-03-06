@@ -2,7 +2,6 @@ import { NiveisRepository } from "@app/repositories/niveis.repository";
 import { Nivel } from "@app/types/niveis.types";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
-import { Prisma } from "@prisma/client";
 import { orderByObj } from "@app/utils/order-by-obj";
 
 @Injectable()
@@ -20,7 +19,7 @@ export class NiveisRepositoryPrisma implements NiveisRepository {
     search?: string;
     sort: string;
   }) {
-    const where: Prisma.NiveisWhereInput = filter?.search
+    const where: any = filter?.search
       ? {
           nivel: {
             contains: filter.search,
