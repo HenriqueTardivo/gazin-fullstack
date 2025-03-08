@@ -1,4 +1,4 @@
-import { Center, Spinner } from "@chakra-ui/react";
+import { Center, Spinner, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -32,7 +32,7 @@ export function Niveis() {
 
   const { getNiveis, deleteNivel } = useNiveis();
 
-  const { isLoading, data, refetch } = useQuery({
+  const { isLoading, data, refetch, error } = useQuery({
     queryKey: ["NIVEIS", debounceSearch, page, sortConfig],
     queryFn: async () =>
       getNiveis(
@@ -40,6 +40,7 @@ export function Niveis() {
         debounceSearch ?? "",
         `${sortConfig.key}/${sortConfig.direction}`
       ),
+    retry: false,
   });
 
   const handleRowClick = (id: number) =>
@@ -92,6 +93,14 @@ export function Niveis() {
       return (
         <Center>
           <Spinner size={"lg"} />
+        </Center>
+      );
+    }
+
+    if (error) {
+      return (
+        <Center>
+          <Text fontSize={"lg"}>Nenhum nível encontrado!</Text>
         </Center>
       );
     }

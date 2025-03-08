@@ -7,6 +7,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
@@ -29,16 +30,19 @@ export class NiveisController {
   ) {}
 
   @Get("/")
+  @HttpCode(200)
   public async getNiveis(@Query() query: QueryNiveisDTO) {
     return this.getNiveisUseCase.execute(query);
   }
 
   @Get("/:id")
+  @HttpCode(201)
   public async getNivelById(@Param() { id }: IdParamDTO) {
     return this.getNivelByIdUseCase.execute(Number(id));
   }
 
   @Delete("/:id")
+  @HttpCode(204)
   public async deleteNivel(@Param() { id }: IdParamDTO) {
     return this.deleteNivelUseCase.execute(Number(id));
   }
@@ -50,6 +54,7 @@ export class NiveisController {
 
   @Put("/:id")
   @Patch("/:id")
+  @HttpCode(200)
   public async editNivel(
     @Param() { id }: IdParamDTO,
     @Body() body: CreateNivelDTO

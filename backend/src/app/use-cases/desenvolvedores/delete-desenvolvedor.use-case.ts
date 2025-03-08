@@ -13,7 +13,7 @@ export class DeleteDesenvolvedorUseCase {
     });
 
     if (devExists.length === 0) {
-      throw new HttpException("Desenvolvedor inexistente!", 401);
+      throw new HttpException("Desenvolvedor inexistente!", 400);
     }
 
     return await this.desenvolvedoresRepository.deleteDesenvolvedor(id);

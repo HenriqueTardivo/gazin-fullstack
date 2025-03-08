@@ -1,4 +1,4 @@
-import { Center, HStack, Spinner, Stack } from "@chakra-ui/react";
+import { Center, HStack, Spinner, Stack, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -42,7 +42,7 @@ export function Desenvolvedores() {
 
   const { getDesenvolvedores, deleteDesenvolvedor } = useDesenvolvedores();
 
-  const { isLoading, data, refetch } = useQuery({
+  const { isLoading, data, refetch, error } = useQuery({
     queryKey: ["DESENVOLVEDORES", page, debounceSearch, sortConfig],
     queryFn: async () =>
       getDesenvolvedores({
@@ -50,6 +50,7 @@ export function Desenvolvedores() {
         search: debounceSearch ?? "",
         sort: `${sortConfig.key}/${sortConfig.direction}`,
       }),
+    retry: false,
   });
 
   const handleSort = (columnKey: string) => {
@@ -103,6 +104,14 @@ export function Desenvolvedores() {
       return (
         <Center>
           <Spinner size={"lg"} />
+        </Center>
+      );
+    }
+
+    if (error) {
+      return (
+        <Center>
+          <Text>Nenhum desenvolvedor encontrado!</Text>
         </Center>
       );
     }

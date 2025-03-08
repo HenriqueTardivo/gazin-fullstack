@@ -7,6 +7,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
@@ -29,27 +30,32 @@ export class DesenvolvedoresController {
   ) {}
 
   @Get("/")
+  @HttpCode(200)
   public async getDesenvolvedores(@Query() query: QueryDesenvolvedorDTO) {
     return this.getDesenvolvedoresUseCase.execute(query);
   }
 
   @Get("/:id")
+  @HttpCode(200)
   public async getDesenvolvedorById(@Param() { id }: IdParamDTO) {
     return this.getDesenvolvedoresByIdUseCase.execute(Number(id));
   }
 
   @Delete("/:id")
+  @HttpCode(204)
   public async deleteDesenvolvedor(@Param() { id }: IdParamDTO) {
     return await this.deleteDesenvolvedoresUseCase.execute(Number(id));
   }
 
   @Post("/")
+  @HttpCode(201)
   public async createDesenvolvedor(@Body() body: CreateDesenvolvedorDTO) {
     return await this.createDesenvolvedoresUseCase.execute(body);
   }
 
   @Put("/:id")
   @Patch("/:id")
+  @HttpCode(200)
   public async editDesenvolvedor(
     @Param() { id }: IdParamDTO,
     @Body() body: CreateDesenvolvedorDTO

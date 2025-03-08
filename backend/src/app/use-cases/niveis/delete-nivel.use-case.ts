@@ -17,7 +17,7 @@ export class DeleteNivelUseCase {
     if (devsNivel.length > 0) {
       throw new HttpException(
         `Existem ${devsNivel.length} desenvolvedores cadastrados nesse nível, não é possível deletar!`,
-        401
+        400
       );
     }
 

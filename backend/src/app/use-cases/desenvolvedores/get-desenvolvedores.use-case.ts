@@ -1,7 +1,7 @@
 import { DesenvolvedorRepository } from "@app/repositories/desenvolvedores.respository";
 import { paginatedResult } from "@app/utils/paginated-result";
 import { QueryDesenvolvedorDTO } from "@infra/http/dto/query-desenvolvedores.dto";
-import { HttpException, Injectable } from "@nestjs/common";
+import { HttpException, Injectable, NotFoundException } from "@nestjs/common";
 
 @Injectable()
 export class GetDesenvolvedoresUseCase {
@@ -10,7 +10,7 @@ export class GetDesenvolvedoresUseCase {
   ) {}
 
   public async execute(filter: QueryDesenvolvedorDTO) {
-    if (filter.page < 0) {
+    if (!filter.page || filter?.page <= 0) {
       throw new HttpException("Página não pode ser menor que 0", 401);
     }
 
@@ -21,6 +21,10 @@ export class GetDesenvolvedoresUseCase {
         search: filter?.search,
         sort: filter.sort,
       });
+
+    if (count === 0) {
+      throw new NotFoundException("Nenhum desenvolvedor encontrado!");
+    }
 
     return paginatedResult(result, filter.page, count);
   }
